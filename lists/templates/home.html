@@ -4,8 +4,16 @@
 	</head>
 	<body>
 		<h1>Your To-Do list</h1>
-		<input id="id_new_item" placeholder="Enter a to-do item" />
+		<form method="POST">		<!-- Because we haven't specified an 'action=' attribute in the form, POST is submitting back to the same URL it was rendered from (/) -->
+						<!-- Which is dealt by our home_page function -->
+			<input name="item_text" id="id_new_item" placeholder="Enter a to-do item" />
+			{% csrf_token %}	<!-- Add auto-generated token(CSRF) in each form to be able to identify POST requests as having come from the original site. -->
+						<!-- Django will substitute that during rendering with an <input type="hidden"> containing CSRF token. -->
+		</form>
+
 		<table id="id_list_table">
+			<tr><td>1: {{ new_item_text }} </td></tr>		<!-- Power of Django syntax: pass variables from Python view code into HTML templates with {{...}} notation,
+										which display the object as a string -->
 		</table>
 	</body>
 </html>
