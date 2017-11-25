@@ -12,8 +12,9 @@
 		</form>
 
 		<table id="id_list_table">
-			<tr><td>1: {{ new_item_text }} </td></tr>		<!-- Power of Django syntax: pass variables from Python view code into HTML templates with {{...}} notation,
-										which display the object as a string -->
+			{% for item in items %}
+				<tr><td>{{ forloop.counter }}: {{ item.text }}</td></tr>
+			{% endfor %}
 		</table>
 	</body>
 </html>
