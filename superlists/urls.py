@@ -17,5 +17,6 @@ from django.conf.urls import url
 from lists import views
 urlpatterns = [
     url(r'^$', views.home_page, name='home'),       # '^$' - an empty string (root of our site) is mapped with home_page view callback function (it will be called whenever a root URL is requested)
+    url(r'^lists/new$', views.new_list, name='new_list'),
     url(r'^lists/the-only-list-in-the-world/$', views.view_list, name='view_list'),
 ]

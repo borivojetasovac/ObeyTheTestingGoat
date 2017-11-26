@@ -3,25 +3,21 @@ from django.test import TestCase
 
 class HomePageTest(TestCase):
     def test_uses_home_template(self):      # HTTP GET Request requests data from a specified resource
-        response = self.client.get('/')     # calls the home_page view function indirectly (via url mapping), because the given URL is root (home)
+        response = self.client.get('/')     # calls the home_page view function indirectly (via url mapping)
         self.assertTemplateUsed(response, 'home.html')
 
-    def test_can_save_a_POST_request(self):                                 # HTTP POST Request submits data to be processed to a specified resource
-        self.client.post('/', data={'item_text': 'A new list item'})        # to do a POST, call self.client.post: 'data' argument contains the form data we want to send
+class NewListTest(TestCase):
+    def test_can_save_a_POST_request(self):                                         # HTTP POST Request submits data to be processed to a specified resource
+        self.client.post('/lists/new', data={'item_text': 'A new list item'})       # to do a POST, call self.client.post: 'data' argument contains the form data we want to send
         
         self.assertEqual(Item.objects.count(), 1)       # objects.count() is short for objects.all().count()
         new_item = Item.objects.first()                 # the same as objects.all()[0]
         self.assertEqual(new_item.text, 'A new list item')
 
     def test_redirects_after_POST(self):
-        response = self.client.post('/', data={'item_text': 'A new list item'}) # to do a POST, call self.client.post: 'data' argument contains the form data we want to send
-        self.assertEqual(response.status_code, 302)     # response represent an HTTP redirect (code 302) and points the browser towards a new location
-        self.assertEqual(response['location'], '/lists/the-only-list-in-the-world/')
+        response = self.client.post('/lists/new', data={'item_text': 'A new list item'})    # to do a POST, call self.client.post: 'data' argument contains the form data we want to send
+        self.assertRedirects(response, '/lists/the-only-list-in-the-world/')
     
-    def test_only_saves_items_when_necessary(self):
-        self.client.get('/')
-        self.assertEqual(Item.objects.count(), 0)
-
 class ItemModelTest(TestCase):
     def test_saving_and_retrieving_items(self):
         first_item = Item()
