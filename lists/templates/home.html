@@ -3,18 +3,11 @@
 		<title>To-Do lists</title>
 	</head>
 	<body>
-		<h1>Your To-Do list</h1>
-		<form method="POST">		<!-- Because we haven't specified an 'action=' attribute in the form, POST is submitting back to the same URL it was rendered from (/) -->
-						<!-- Which is dealt by our home_page function -->
+		<h1>Start a new To-Do list</h1>
+		<form method="POST">
 			<input name="item_text" id="id_new_item" placeholder="Enter a to-do item" />
 			{% csrf_token %}	<!-- Add auto-generated token(CSRF) in each form to be able to identify POST requests as having come from the original site. -->
 						<!-- Django will substitute that during rendering with an <input type="hidden"> containing CSRF token. -->
 		</form>
-
-		<table id="id_list_table">
-			{% for item in items %}
-				<tr><td>{{ forloop.counter }}: {{ item.text }}</td></tr>
-			{% endfor %}
-		</table>
 	</body>
 </html>
