@@ -34,3 +34,7 @@ class ListAndItemModelsTest(TestCase):
         with self.assertRaises(ValidationError):        # check if doing something will raise an error
             item.save()
             item.full_clean()                           # run Django's full validation - which disallow empty values by default
+
+    def test_get_absolute_url(self):                    # says what page displays the item
+        list_ = List.objects.create()
+        self.assertEqual(list_.get_absolute_url(), f'/lists/{list_.id}/')
