@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.shortcuts import redirect, render
 from lists.models import Item, List
 
@@ -10,10 +11,17 @@ def view_list(request, list_id):
                                                                         # optional: a dictionary values to add to the template context
 def new_list(request):
     list_ = List.objects.create()
-    Item.objects.create(text=request.POST['item_text'], list=list_)     # .objects.create is short for creating and saving new Item     = ... get the POST parameter (new to-do item)
+    item = Item(text=request.POST['item_text'], list=list_)             # get the POST parameter (new to-do item)
+    try:
+        item.full_clean()
+        item.save()
+    except ValidationError:
+        list_.delete()
+        error = "You can't have an empty list item"
+        return render(request, 'home.html', {"error": error})
     return redirect(f'/lists/{list_.id}/')
 
 def add_item(request, list_id):
     list_ = List.objects.get(id=list_id)
-    Item.objects.create(text=request.POST['item_text'], list=list_)
+    Item.objects.create(text=request.POST['item_text'], list=list_)     # objects.create is short for creating and saving new Item
     return redirect(f'/lists/{list_.id}/')

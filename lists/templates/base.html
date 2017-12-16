@@ -20,6 +20,11 @@
 								placeholder="Enter a to-do item" />
 							{% csrf_token %}	<!-- Add auto-generated token in each form to be able to identify POST requests as having come from the original site. -->
 										<!-- Django will substitute that during rendering with an <input type="hidden"> containing CSRF token. -->
+							{% if error %}
+								<div class="form-group has-error">
+									<span class="help-block">{{ error }}</span>
+								</div>
+							{% endif %}
 						</form>
 					</div>
 				</div>
