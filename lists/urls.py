@@ -19,6 +19,5 @@ from lists import views
 urlpatterns = [     # we can trim down to only include the latter part of our three URLs
     url(r'^new$', views.new_list, name='new_list'),
     url(r'^(\d+)/$', views.view_list, name='view_list'),      # (\d+) - capture group -> will be passed to the view as an argument
-    url(r'^(\d+)/add_item$', views.add_item, name='add_item'),
 ]
 
