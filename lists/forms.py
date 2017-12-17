@@ -10,17 +10,10 @@ class ItemForm(forms.models.ModelForm):
         fields = ('text',)              # specify which fields we want it to use
         widgets = {
                 'text': forms.fields.TextInput(attrs={
-                    'placeholder': 'Enter a to-do intem',
+                    'placeholder': 'Enter a to-do item',
                     'class': 'form-control input-lg',
                 }),
         }
         error_messages = {
                 'text': {'required': EMPTY_ITEM_ERROR}
         }
-
-    item_text = forms.CharField(
-            widget=forms.fields.TextInput(attrs={
-                'placeholder': 'Enter a to-do item',
-                'class': 'form-control input-lg',
-            }),
-    )
